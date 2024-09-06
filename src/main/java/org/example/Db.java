@@ -33,7 +33,7 @@ public class Db {
 
         try (Session session = connector.getSession()) {
             session.beginTransaction();
-            personList.stream().map(x -> session.save(x));
+            personList.forEach(x -> session.save(x));
             session.getTransaction().commit();
         } catch (Exception e) {
             throw new RuntimeException(e);
