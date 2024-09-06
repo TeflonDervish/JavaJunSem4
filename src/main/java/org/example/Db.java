@@ -57,7 +57,7 @@ public class Db {
             Transaction t = session.beginTransaction();
             List<Person> books = session.createQuery("FROM Person",
                     Person.class).getResultList();
-            books.forEach(b -> session.delete(b));
+            books.forEach(session::delete);
             t.commit();
         } catch (Exception e) {
             throw new RuntimeException(e);
