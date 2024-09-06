@@ -18,7 +18,7 @@ public class Db {
 
     public static void addPerson(Person person) {
 
-        try (Session session = connector.getSession();) {
+        try (Session session = connector.getSession()) {
             session.beginTransaction();
             session.save(person);
             session.getTransaction().commit();
@@ -33,7 +33,7 @@ public class Db {
 
         try (Session session = connector.getSession()) {
             session.beginTransaction();
-            personList.forEach(x -> session.save(x));
+            personList.forEach(session::save);
             session.getTransaction().commit();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -57,9 +57,7 @@ public class Db {
             Transaction t = session.beginTransaction();
             List<Person> books = session.createQuery("FROM Person",
                     Person.class).getResultList();
-            books.forEach(b -> {
-                session.delete(b);
-            });
+            books.forEach(b -> session.delete(b));
             t.commit();
         } catch (Exception e) {
             throw new RuntimeException(e);
